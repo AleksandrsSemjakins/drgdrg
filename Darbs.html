@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Online Store</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    header, nav, main, footer { padding: 20px; }
+    header { background-color: #f8f8f8; border-bottom: 1px solid #ddd; }
+    nav a { margin: 0 10px; text-decoration: none; color: #333; }
+    .filters input, .filters select { margin: 5px; padding: 5px; }
+    .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+    .product {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin: 10px;
+      width: 200px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      border-radius: 5px;
+      text-align: center;
+    }
+    .product img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Shop</h1>
+    <nav>
+      <a href="#">Products</a>
+      <a href="#">Solutions</a>
+      <a href="#">Community</a>
+      <a href="#">Resources</a>
+      <a href="#">Pricing</a>
+      <a href="#">Contact</a>
+      <a href="#">Sign in</a>
+      <a href="#">Register</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="filters">
+      <input type="text" id="keyword" placeholder="Keywords" />
+      <select id="gender">
+        <option value="">Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+      <input type="range" id="priceRange" min="0" max="100" value="100" />
+      <label>Price under: $<span id="priceValue">100</span></label>
+      <select id="color">
+        <option value="">Color</option>
+        <option value="blue">Blue</option>
+        <option value="black">Black</option>
+        <option value="white">White</option>
+      </select>
+      <select id="size">
+        <option value="">Size</option>
+        <option value="M">Medium</option>
+        <option value="L">Large</option>
+      </select>
+      <select id="sort">
+        <option value="">Sort by</option>
+        <option value="asc">Price ascending</option>
+        <option value="desc">Price descending</option>
+      </select>
+    </section>
+
+    <section class="products" id="productList">
+      <div class="product" data-gender="male" data-price="20" data-name="Denim Jeans" data-color="blue" data-size="L">
+        <img src="https://images.unsplash.com/photo-1618354691261-c87bb310b606?auto=format&fit=crop&w=400&q=80" alt="Denim Jeans">
+        <h3>Denim Jeans</h3>
+        <p>$20</p>
+      </div>
+      <div class="product" data-gender="male" data-price="25" data-name="Baggy Jeans" data-color="black" data-size="L">
+        <img src="https://images.unsplash.com/photo-1585386959984-a4155223f287?auto=format&fit=crop&w=400&q=80" alt="Baggy Jeans">
+        <h3>Baggy Jeans</h3>
+        <p>$25</p>
+      </div>
+      <div class="product" data-gender="female" data-price="15" data-name="Skinny Jeans" data-color="white" data-size="M">
+        <img src="https://images.unsplash.com/photo-1571867424480-744cbf2dd4c6?auto=format&fit=crop&w=400&q=80" alt="Skinny Jeans">
+        <h3>Skinny Jeans</h3>
+        <p>$15</p>
+      </div>
+      <div class="product" data-gender="male" data-price="30" data-name="Denim Jeans" data-color="blue" data-size="M">
+        <img src="https://images.unsplash.com/photo-1618354691710-c4be7523a109?auto=format&fit=crop&w=400&q=80" alt="Denim Jeans">
+        <h3>Denim Jeans</h3>
+        <p>$30</p>
+      </div>
+      <div class="product" data-gender="female" data-price="22" data-name="Denim Jeans" data-color="black" data-size="M">
+        <img src="https://images.unsplash.com/photo-1600181954297-6615c1f0566b?auto=format&fit=crop&w=400&q=80" alt="Denim Jeans">
+        <h3>Denim Jeans</h3>
+        <p>$22</p>
+      </div>
+      <div class="product" data-gender="female" data-price="30" data-name="Denim Jeans (M)" data-color="white" data-size="L">
+        <img src="https://images.unsplash.com/photo-1622448740095-885c6f7e40d4?auto=format&fit=crop&w=400&q=80" alt="Denim Jeans (M)">
+        <h3>Denim Jeans (M)</h3>
+        <p>$30</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Shop Inc.</p>
+  </footer>
+
+  <script>
+    const keywordInput = document.getElementById('keyword');
+    const genderSelect = document.getElementById('gender');
+    const priceRange = document.getElementById('priceRange');
+    const priceValue = document.getElementById('priceValue');
+    const colorSelect = document.getElementById('color');
+    const sizeSelect = document.getElementById('size');
+    const sortSelect = document.getElementById('sort');
+    const products = Array.from(document.querySelectorAll('.product'));
+    const productList = document.getElementById('productList');
+
+    function filterAndSort() {
+      const keyword = keywordInput.value.toLowerCase();
+      const gender = genderSelect.value;
+      const maxPrice = parseInt(priceRange.value);
+      const color = colorSelect.value;
+      const size = sizeSelect.value;
+      const sort = sortSelect.value;
+
+      let filtered = products.filter(product => {
+        const name = product.dataset.name.toLowerCase();
+        const price = parseFloat(product.dataset.price);
+        const productGender = product.dataset.gender;
+        const productColor = product.dataset.color;
+        const productSize = product.dataset.size;
+
+        return (
+          name.includes(keyword) &&
+          (gender === '' || productGender === gender) &&
+          (color === '' || productColor === color) &&
+          (size === '' || productSize === size) &&
+          price <= maxPrice
+        );
+      });
+
+      if (sort === 'asc') {
+        filtered.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
+      } else if (sort === 'desc') {
+        filtered.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
+      }
+
+      productList.innerHTML = '';
+      filtered.forEach(product => productList.appendChild(product));
+    }
+
+    keywordInput.addEventListener('input', filterAndSort);
+    genderSelect.addEventListener('change', filterAndSort);
+    priceRange.addEventListener('input', () => {
+      priceValue.textContent = priceRange.value;
+      filterAndSort();
+    });
+    colorSelect.addEventListener('change', filterAndSort);
+    sizeSelect.addEventListener('change', filterAndSort);
+    sortSelect.addEventListener('change', filterAndSort);
+  </script>
+</body>
+</html>
