@@ -1,72 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Online Store</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Urban Stitch</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
-    header, nav, main, footer { padding: 20px; }
-    header { background-color: #f8f8f8; border-bottom: 1px solid #ddd; }
-    nav a { margin: 0 10px; text-decoration: none; color: #333; }
-    .filters input, .filters select { margin: 5px; padding: 5px; }
-    .products {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+    header {
+      background: #333;
+      color: #fff;
+      padding: 10px 0;
+      text-align: center;
+    }
+    nav a {
+      margin: 0 10px;
+      color: #fff;
+      text-decoration: none;
+    }
+    .filters {
+      margin: 20px;
+    }
+    .filters select,
+    .filters input {
+      margin-right: 10px;
+      padding: 8px;
     }
     .product {
+      display: inline-block;
+      width: 30%;
+      margin: 10px;
       border: 1px solid #ddd;
       padding: 10px;
-      margin: 10px;
-      width: 200px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-      border-radius: 5px;
       text-align: center;
+      cursor: pointer;
     }
     .product img {
       width: 100%;
       height: auto;
-      border-radius: 5px;
+    }
+    .strike {
+      text-decoration: line-through;
+    }
+    .product-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      text-align: center;
+      width: 400px;
+    }
+    .modal-content img {
+      max-width: 100%;
+      height: auto;
+    }
+    footer {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .button-container {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+    .button-container button {
+      padding: 10px 20px;
+      background-color: #333;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .button-container button:hover {
+      background-color: #555;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Shop</h1>
+    <h1>Urban Stitch</h1>
     <nav>
-      <a href="#">Products</a>
-      <a href="#">Solutions</a>
-      <a href="#">Community</a>
-      <a href="#">Resources</a>
-      <a href="#">Pricing</a>
-      <a href="#">Contact</a>
+      <a onclick="scrollToSection('home')">Home</a>
+      <a onclick="scrollToSection('products')">Products</a>
       <a href="#">Sign in</a>
       <a href="#">Register</a>
+      <a href="#">Contact</a>
     </nav>
   </header>
 
   <main>
+    <section id="home">
+      <h2>Welcome to Urban Stitch</h2>
+      <p>Your go-to destination for stylish jeans.</p>
+    </section>
+
     <section class="filters">
-      <input type="text" id="keyword" placeholder="Keywords" />
+      <input type="text" id="keyword" placeholder="Search jeans...">
+      
       <select id="gender">
         <option value="">Gender</option>
         <option value="male">Male</option>
         <option value="female">Female</option>
+        <option value="children">Children</option>
       </select>
-      <input type="range" id="priceRange" min="0" max="100" value="100" />
-      <label>Price under: $<span id="priceValue">100</span></label>
+
+      <input type="range" id="priceRange" min="0" max="35" value="35">
+      <label>Price under: €<span id="priceValue">35</span></label>
+
       <select id="color">
         <option value="">Color</option>
         <option value="blue">Blue</option>
         <option value="black">Black</option>
         <option value="white">White</option>
       </select>
+
       <select id="size">
         <option value="">Size</option>
+        <option value="S">Small</option>
         <option value="M">Medium</option>
         <option value="L">Large</option>
       </select>
+
       <select id="sort">
         <option value="">Sort by</option>
         <option value="asc">Price ascending</option>
@@ -74,45 +139,76 @@
       </select>
     </section>
 
-    <section class="products" id="productList">
-      <div class="product" data-gender="male" data-price="20" data-name="Denim Jeans" data-color="blue" data-size="L">
-        <img src="https://images.unsplash.com/photo-1618354691261-c87bb310b606?auto=format&fit=crop&w=400&q=80" alt="Denim Jeans">
-        <h3>Denim Jeans</h3>
-        <p>$20</p>
-      </div>
-      <div class="product" data-gender="male" data-price="25" data-name="Baggy Jeans" data-color="black" data-size="L">
-        <img src="https://images.unsplash.com/photo-1585386959984-a4155223f287?auto=format&fit=crop&w=400&q=80" alt="Baggy Jeans">
-        <h3>Baggy Jeans</h3>
-        <p>$25</p>
-      </div>
-      <div class="product" data-gender="female" data-price="15" data-name="Skinny Jeans" data-color="white" data-size="M">
-        <img src="https://images.unsplash.com/photo-1571867424480-744cbf2dd4c6?auto=format&fit=crop&w=400&q=80" alt="Skinny Jeans">
-        <h3>Skinny Jeans</h3>
-        <p>$15</p>
-      </div>
-      <div class="product" data-gender="male" data-price="30" data-name="Denim Jeans" data-color="blue" data-size="M">
-        <img src="https://images.unsplash.com/photo-1618354691710-c4be7523a109?auto=format&fit=crop&w=400&q=80" alt="Denim Jeans">
-        <h3>Denim Jeans</h3>
-        <p>$30</p>
-      </div>
-      <div class="product" data-gender="female" data-price="22" data-name="Denim Jeans" data-color="black" data-size="M">
-        <img src="https://images.unsplash.com/photo-1600181954297-6615c1f0566b?auto=format&fit=crop&w=400&q=80" alt="Denim Jeans">
-        <h3>Denim Jeans</h3>
-        <p>$22</p>
-      </div>
-      <div class="product" data-gender="female" data-price="30" data-name="Denim Jeans (M)" data-color="white" data-size="L">
-        <img src="https://images.unsplash.com/photo-1622448740095-885c6f7e40d4?auto=format&fit=crop&w=400&q=80" alt="Denim Jeans (M)">
-        <h3>Denim Jeans (M)</h3>
-        <p>$30</p>
-      </div>
-    </section>
+    <section class="products" id="products"></section>
   </main>
 
   <footer>
-    <p>&copy; 2025 Shop Inc.</p>
+    <p>&copy; 2025 Urban Stitch</p>
   </footer>
 
+  <!-- Modal -->
+  <div id="productModal" class="product-modal">
+    <div class="modal-content">
+      <span onclick="closeModal()" style="cursor: pointer; font-size: 30px;">&times;</span>
+      <h3 id="modalProductName"></h3>
+      <img id="modalProductImg" src="" alt="Product Image">
+      <p id="modalProductPrice"></p>
+      <div class="button-container">
+        <button onclick="addToCart()">Add to Cart</button>
+        <button onclick="buyNow()">Buy Now</button>
+      </div>
+    </div>
+  </div>
+
   <script>
+    const productsData = [
+      {
+        name: 'Denim Jeans',
+        price: 20,
+        gender: 'male',
+        color: 'blue',
+        size: 'L',
+        img: 'https://www.jiomart.com/images/product/500x630/469279439_blue/us-men-jeans-blue-32-model-469279439_blue-0-202211071213.jpg'
+      },
+      {
+        name: 'Baggy Jeans',
+        price: 25,
+        gender: 'male',
+        color: 'black',
+        size: 'L',
+        img: 'https://i.pinimg.com/736x/49/c7/51/49c751917681b60ab60ab4254501dbd8.jpg'
+      },
+      {
+        name: 'Skinny Jeans',
+        price: 15,
+        priceBefore: 25,
+        gender: 'female',
+        color: 'white',
+        size: 'S',
+        img: 'https://cdna.lystit.com/photos/8eab-2014/11/14/true-religion-white-jeans-casey-low-rise-super-skinny-in-optic-white-product-1-25491551-2-407746335-normal.jpeg'
+      },
+      {
+        name: 'Black Skinny Jeans',
+        price: 30,
+        priceBefore: 50,
+        discount: 0.4,
+        gender: 'female',
+        color: 'black',
+        size: 'M',
+        img: 'https://oldnavy.gap.com/webcontent/0050/704/839/cn50704839.jpg'
+      },
+      {
+        name: 'Children Jeans',
+        price: 15,
+        priceBefore: 30,
+        discount: 0.5,
+        gender: 'children',
+        color: 'blue',
+        size: 'S',
+        img: 'https://image.made-in-china.com/2f0j00ahEqtsyKhGcS/Custom-Rubber-Waist-Embroidery-Casual-Straight-Tube-Children-Girls-Jeans.jpg'
+      }
+    ];
+
     const keywordInput = document.getElementById('keyword');
     const genderSelect = document.getElementById('gender');
     const priceRange = document.getElementById('priceRange');
@@ -120,52 +216,81 @@
     const colorSelect = document.getElementById('color');
     const sizeSelect = document.getElementById('size');
     const sortSelect = document.getElementById('sort');
-    const products = Array.from(document.querySelectorAll('.product'));
-    const productList = document.getElementById('productList');
+    const productList = document.getElementById('products');
+
+    function renderProducts(data) {
+      productList.innerHTML = '';
+      data.forEach(p => {
+        const el = document.createElement('div');
+        el.className = 'product';
+        el.innerHTML = `
+          <img src="${p.img}" alt="${p.name}">
+          <h3>${p.name}</h3>
+          <p>€${p.price}${p.priceBefore ? ` <span class="strike">€${p.priceBefore}</span>` : ''}</p>
+        `;
+        el.onclick = () => showProductModal(p);
+        productList.appendChild(el);
+      });
+    }
 
     function filterAndSort() {
-      const keyword = keywordInput.value.toLowerCase();
-      const gender = genderSelect.value;
-      const maxPrice = parseInt(priceRange.value);
-      const color = colorSelect.value;
-      const size = sizeSelect.value;
-      const sort = sortSelect.value;
-
-      let filtered = products.filter(product => {
-        const name = product.dataset.name.toLowerCase();
-        const price = parseFloat(product.dataset.price);
-        const productGender = product.dataset.gender;
-        const productColor = product.dataset.color;
-        const productSize = product.dataset.size;
-
+      let filtered = productsData.filter(p => {
+        const actualPrice = p.price;
         return (
-          name.includes(keyword) &&
-          (gender === '' || productGender === gender) &&
-          (color === '' || productColor === color) &&
-          (size === '' || productSize === size) &&
-          price <= maxPrice
+          p.name.toLowerCase().includes(keywordInput.value.toLowerCase()) &&
+          (!genderSelect.value || p.gender === genderSelect.value) &&
+          (!colorSelect.value || p.color === colorSelect.value) &&
+          (!sizeSelect.value || p.size === sizeSelect.value) &&
+          actualPrice <= parseInt(priceRange.value)
         );
       });
 
-      if (sort === 'asc') {
-        filtered.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
-      } else if (sort === 'desc') {
-        filtered.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
+      if (sortSelect.value === 'asc') {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (sortSelect.value === 'desc') {
+        filtered.sort((a, b) => b.price - a.price);
       }
 
-      productList.innerHTML = '';
-      filtered.forEach(product => productList.appendChild(product));
+      renderProducts(filtered);
     }
 
-    keywordInput.addEventListener('input', filterAndSort);
-    genderSelect.addEventListener('change', filterAndSort);
-    priceRange.addEventListener('input', () => {
+    function showProductModal(product) {
+      document.getElementById('modalProductName').textContent = product.name;
+      document.getElementById('modalProductImg').src = product.img;
+      document.getElementById('modalProductPrice').innerHTML = `€${product.price}${product.priceBefore ? ` <span class="strike">€${product.priceBefore}</span>` : ''}`;
+      document.getElementById('productModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('productModal').style.display = 'none';
+    }
+
+    function addToCart() {
+      alert('Product added to cart!');
+      closeModal();
+    }
+
+    function buyNow() {
+      alert('Proceeding to checkout...');
+      closeModal();
+    }
+
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    keywordInput.oninput =
+    genderSelect.onchange =
+    priceRange.oninput =
+    colorSelect.onchange =
+    sizeSelect.onchange =
+    sortSelect.onchange = () => {
       priceValue.textContent = priceRange.value;
       filterAndSort();
-    });
-    colorSelect.addEventListener('change', filterAndSort);
-    sizeSelect.addEventListener('change', filterAndSort);
-    sortSelect.addEventListener('change', filterAndSort);
+    };
+
+    // Initial render
+    renderProducts(productsData);
   </script>
 </body>
 </html>
