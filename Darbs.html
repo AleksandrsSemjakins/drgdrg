@@ -184,7 +184,7 @@
   <!-- Product Modal -->
   <div id="productModal" class="product-modal">
     <div class="modal-content">
-      <span onclick="closeModal()" style="cursor: pointer; font-size: 30px;">&times;</span>
+      <span onclick="closeModal('productModal')" style="cursor: pointer; font-size: 30px;">&times;</span>
       <h3 id="modalProductName"></h3>
       <img id="modalProductImg" src="" alt="Product Image">
       <p id="modalProductPrice"></p>
@@ -202,7 +202,7 @@
       <input type="text" id="signInUsername" placeholder="Username">
       <input type="password" id="signInPassword" placeholder="Password">
       <button onclick="signIn()">Sign In</button>
-      <button onclick="closeModal()">Close</button>
+      <button onclick="closeModal('signInModal')">Close</button>
     </div>
   </div>
 
@@ -214,7 +214,7 @@
       <input type="email" id="registerEmail" placeholder="Email">
       <input type="password" id="registerPassword" placeholder="Password">
       <button onclick="register()">Register</button>
-      <button onclick="closeModal()">Close</button>
+      <button onclick="closeModal('registerModal')">Close</button>
     </div>
   </div>
 
@@ -226,7 +226,7 @@
       <input type="email" id="contactEmail" placeholder="Your Email">
       <textarea id="contactMessage" placeholder="Your Message" rows="4"></textarea>
       <button onclick="sendMessage()">Send Message</button>
-      <button onclick="closeModal()">Close</button>
+      <button onclick="closeModal('contactModal')">Close</button>
     </div>
   </div>
 
@@ -285,16 +285,15 @@
       document.getElementById(modalId).style.display = 'flex';
     }
 
-    function closeModal() {
-      const modals = document.querySelectorAll('.modal');
-      modals.forEach(modal => modal.style.display = 'none');
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
     }
 
     function signIn() {
       const username = document.getElementById('signInUsername').value;
       const password = document.getElementById('signInPassword').value;
       alert(`Signed in as ${username}`);
-      closeModal();
+      closeModal('signInModal');
     }
 
     function register() {
@@ -302,7 +301,7 @@
       const email = document.getElementById('registerEmail').value;
       const password = document.getElementById('registerPassword').value;
       alert(`Registered with ${username} and email: ${email}`);
-      closeModal();
+      closeModal('registerModal');
     }
 
     function sendMessage() {
@@ -310,7 +309,7 @@
       const email = document.getElementById('contactEmail').value;
       const message = document.getElementById('contactMessage').value;
       alert(`Message sent from ${name} (${email}): ${message}`);
-      closeModal();
+      closeModal('contactModal');
     }
 
     // Product Filtering and Sorting
@@ -368,12 +367,12 @@
 
     function addToCart() {
       alert('Product added to cart!');
-      closeModal();
+      closeModal('productModal');
     }
 
     function buyNow() {
       alert('Proceeding to checkout...');
-      closeModal();
+      closeModal('productModal');
     }
 
     function scrollToSection(id) {
