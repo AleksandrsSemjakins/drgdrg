@@ -19,6 +19,7 @@
       margin: 0 10px;
       color: #fff;
       text-decoration: none;
+      cursor: pointer;
     }
     .filters {
       margin: 20px;
@@ -85,6 +86,40 @@
     .button-container button:hover {
       background-color: #555;
     }
+    /* Modal Styling */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+    }
+    .modal-content input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .modal-content button {
+      width: 100%;
+      padding: 10px;
+      background-color: #333;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .modal-content button:hover {
+      background-color: #555;
+    }
   </style>
 </head>
 <body>
@@ -93,9 +128,9 @@
     <nav>
       <a onclick="scrollToSection('home')">Home</a>
       <a onclick="scrollToSection('products')">Products</a>
-      <a href="#">Sign in</a>
-      <a href="#">Register</a>
-      <a href="#">Contact</a>
+      <a onclick="openModal('signInModal')">Sign in</a>
+      <a onclick="openModal('registerModal')">Register</a>
+      <a onclick="openModal('contactModal')">Contact</a>
     </nav>
   </header>
 
@@ -146,7 +181,7 @@
     <p>&copy; 2025 Urban Stitch</p>
   </footer>
 
-  <!-- Modal -->
+  <!-- Product Modal -->
   <div id="productModal" class="product-modal">
     <div class="modal-content">
       <span onclick="closeModal()" style="cursor: pointer; font-size: 30px;">&times;</span>
@@ -160,7 +195,43 @@
     </div>
   </div>
 
+  <!-- Sign In Modal -->
+  <div id="signInModal" class="modal">
+    <div class="modal-content">
+      <h3>Sign In</h3>
+      <input type="text" id="signInUsername" placeholder="Username">
+      <input type="password" id="signInPassword" placeholder="Password">
+      <button onclick="signIn()">Sign In</button>
+      <button onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <!-- Register Modal -->
+  <div id="registerModal" class="modal">
+    <div class="modal-content">
+      <h3>Register</h3>
+      <input type="text" id="registerUsername" placeholder="Username">
+      <input type="email" id="registerEmail" placeholder="Email">
+      <input type="password" id="registerPassword" placeholder="Password">
+      <button onclick="register()">Register</button>
+      <button onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <!-- Contact Modal -->
+  <div id="contactModal" class="modal">
+    <div class="modal-content">
+      <h3>Contact Us</h3>
+      <input type="text" id="contactName" placeholder="Your Name">
+      <input type="email" id="contactEmail" placeholder="Your Email">
+      <textarea id="contactMessage" placeholder="Your Message" rows="4"></textarea>
+      <button onclick="sendMessage()">Send Message</button>
+      <button onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
   <script>
+    // Product Data
     const productsData = [
       {
         name: 'Denim Jeans',
@@ -209,6 +280,40 @@
       }
     ];
 
+    // Modal Functions
+    function openModal(modalId) {
+      document.getElementById(modalId).style.display = 'flex';
+    }
+
+    function closeModal() {
+      const modals = document.querySelectorAll('.modal');
+      modals.forEach(modal => modal.style.display = 'none');
+    }
+
+    function signIn() {
+      const username = document.getElementById('signInUsername').value;
+      const password = document.getElementById('signInPassword').value;
+      alert(`Signed in as ${username}`);
+      closeModal();
+    }
+
+    function register() {
+      const username = document.getElementById('registerUsername').value;
+      const email = document.getElementById('registerEmail').value;
+      const password = document.getElementById('registerPassword').value;
+      alert(`Registered with ${username} and email: ${email}`);
+      closeModal();
+    }
+
+    function sendMessage() {
+      const name = document.getElementById('contactName').value;
+      const email = document.getElementById('contactEmail').value;
+      const message = document.getElementById('contactMessage').value;
+      alert(`Message sent from ${name} (${email}): ${message}`);
+      closeModal();
+    }
+
+    // Product Filtering and Sorting
     const keywordInput = document.getElementById('keyword');
     const genderSelect = document.getElementById('gender');
     const priceRange = document.getElementById('priceRange');
@@ -259,10 +364,6 @@
       document.getElementById('modalProductImg').src = product.img;
       document.getElementById('modalProductPrice').innerHTML = `€${product.price}${product.priceBefore ? ` <span class="strike">€${product.priceBefore}</span>` : ''}`;
       document.getElementById('productModal').style.display = 'flex';
-    }
-
-    function closeModal() {
-      document.getElementById('productModal').style.display = 'none';
     }
 
     function addToCart() {
